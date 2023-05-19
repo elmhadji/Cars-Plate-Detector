@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">#MainWindow{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+  	background-color: #191919;
+  	color: white;
+  	text-transform: uppercase;
+  	font-weight: 500;
+}
+QPushButton{
+  	border:0;
+  	background: none;
+  	display: block;
+  	text-align: center;
+  	border: 2px solid #2ecc71;
+  	width: 200px;
+  	color: white;
+  	border-radius: 14px;
+  	transition: 0.25s;
+  	font-weight: bold;
+}
+QPushButton:hover{
+  	background: #2ecc71;
+}
+#select_image{
+  	border:0;
+  	background: red;
+  	display: block;
+  	text-align: center;
+  	width: 200px;
+  	color: white;
+  	border-radius: 14px;
+  	transition: 0.25s;
+  	font-weight: bold;
+}
+QLineEdit{
+	border:0;
+	text-align: center;
+  	border: 2px solid #3498db;
+  	padding: 14px 10px;
+   	background: #191919;
+  	color: white;
+  	border-radius: 14px;
+  	transition: 0.25s;
+}
+QLineEdit:focus{
+  	border-color: #2ecc71;
+}
+QTableWidget {
+ 	background-color: #191919;
+ 	border-radius:13px;
+}
+QTableWidget::Item{
+	color: white;
+	text-align: center;
+	font-style: oblique;
+ 	border: 1px double #ffffff;
+ 	padding: 5px 5px;
+}
+QHeaderView::section {
+	background-color:#2c3845;
+	color:white;
+}
+QTableView QTableCornerButton::section {
+    background-color: #2c3845;
+}
+QLabel{
+	color:white;
+}
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,3">
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="select_image">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Select Image</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="reset">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Reset</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="apply_filter">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Apply Filter</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="transform_gray_scale">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Transform Gray Scales</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="show_result">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Show result</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="image">
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Originale Image</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="output">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>20</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>Result</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>27</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

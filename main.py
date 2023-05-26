@@ -137,21 +137,23 @@ class MainPage(QMainWindow):
                     if len(approx) == 4:
                         location = approx
                         break
+                if location is not None:
+                    mask = np.zeros(gray_image.shape, np.uint8)
+                    new_image = drawContours(mask, [location], 0,255, -1)
+                    new_image = bitwise_and(self.image, self.image, mask=mask)
+                    (x,y) = np.where(mask==255)
+                    (x1, y1) = (np.min(x), np.min(y))
+                    (x2, y2) = (np.max(x), np.max(y))
+                    cropped_image = gray_image[x1:x2+1, y1:y2+1]
 
-                mask = np.zeros(gray_image.shape, np.uint8)
-                new_image = drawContours(mask, [location], 0,255, -1)
-                new_image = bitwise_and(self.image, self.image, mask=mask)
-                (x,y) = np.where(mask==255)
-                (x1, y1) = (np.min(x), np.min(y))
-                (x2, y2) = (np.max(x), np.max(y))
-                cropped_image = gray_image[x1:x2+1, y1:y2+1]
+                    # Use Easy OCR To Read Text
+                    reader = easyocr.Reader(['en'])
+                    result = reader.readtext(cropped_image)
 
-                # Use Easy OCR To Read Text
-                reader = easyocr.Reader(['en'])
-                result = reader.readtext(cropped_image)
-
-                #print(result)
-                self.output_label.setText(f"The Number Plate is {result[0][-2]}")
+                    #print(result)
+                    self.output_label.setText(f"The Number Plate is {result[0][-2]}")
+                else:
+                    self.output_label.setText("No number plate found")
             else:
                 dlg = QMessageBox()
                 dlg.setWindowTitle("ERROR")

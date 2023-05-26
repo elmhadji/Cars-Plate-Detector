@@ -117,44 +117,50 @@ class MainPage(QMainWindow):
             dlg.exec()
     
     def apply_result(self):
-        if self.image is not None:
-            # Grayscale
-            gray_image = cvtColor(self.image,COLOR_BGR2GRAY)
+        try:
+            if self.image is not None:
+                # Grayscale
+                gray_image = cvtColor(self.image,COLOR_BGR2GRAY)
 
-            # Apply filter and find edges for localization
-            img_bfilter = bilateralFilter(gray_image ,11,17,17)
-            img_edges = Canny(img_bfilter,30,200)
-            
-            # Find Contours and Apply Mask
-            keypoints = findContours(img_edges.copy(), RETR_TREE, CHAIN_APPROX_SIMPLE)
-            contours = imutils.grab_contours(keypoints)
-            contours = sorted(contours, key=contourArea, reverse=True)[:10]
+                # Apply filter and find edges for localization
+                img_bfilter = bilateralFilter(gray_image ,11,17,17)
+                img_edges = Canny(img_bfilter,30,200)
+                
+                # Find Contours and Apply Mask
+                keypoints = findContours(img_edges.copy(), RETR_TREE, CHAIN_APPROX_SIMPLE)
+                contours = imutils.grab_contours(keypoints)
+                contours = sorted(contours, key=contourArea, reverse=True)[:10]
 
-            location = None
-            for contour in contours:
-                approx = approxPolyDP(contour, 10, True)
-                if len(approx) == 4:
-                    location = approx
-                    break
+                location = None
+                for contour in contours:
+                    approx = approxPolyDP(contour, 10, True)
+                    if len(approx) == 4:
+                        location = approx
+                        break
 
-            mask = np.zeros(gray_image.shape, np.uint8)
-            new_image = drawContours(mask, [location], 0,255, -1)
-            new_image = bitwise_and(self.image, self.image, mask=mask)
-            (x,y) = np.where(mask==255)
-            (x1, y1) = (np.min(x), np.min(y))
-            (x2, y2) = (np.max(x), np.max(y))
-            cropped_image = gray_image[x1:x2+1, y1:y2+1]
+                mask = np.zeros(gray_image.shape, np.uint8)
+                new_image = drawContours(mask, [location], 0,255, -1)
+                new_image = bitwise_and(self.image, self.image, mask=mask)
+                (x,y) = np.where(mask==255)
+                (x1, y1) = (np.min(x), np.min(y))
+                (x2, y2) = (np.max(x), np.max(y))
+                cropped_image = gray_image[x1:x2+1, y1:y2+1]
 
-            # Use Easy OCR To Read Text
-            reader = easyocr.Reader(['en'])
-            result = reader.readtext(cropped_image)
+                # Use Easy OCR To Read Text
+                reader = easyocr.Reader(['en'])
+                result = reader.readtext(cropped_image)
 
-            #print(result)
-            self.output_label.setText(f"The Number Plate is {result[0][-2]}")
-        else:
+                #print(result)
+                self.output_label.setText(f"The Number Plate is {result[0][-2]}")
+            else:
+                dlg = QMessageBox()
+                dlg.setWindowTitle("ERROR")
+                dlg.setText("Please select an Image ")
+                dlg.exec()
+        except Exception as e:
             dlg = QMessageBox()
             dlg.setWindowTitle("ERROR")
-            dlg.setText("Please select an Image ")
+            dlg.setText(f"An error occurred: {str(e)}")
             dlg.exec()
 
 
